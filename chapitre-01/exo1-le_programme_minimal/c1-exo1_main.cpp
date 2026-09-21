@@ -1,6 +1,6 @@
 #include <cstdio>
 int main(){
-    printf("nke\n");
-    printf("yaound\n");
+    printf("nke");
+    printf("yaounde");
     return 0;
 }
