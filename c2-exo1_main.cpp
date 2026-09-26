@@ -6,6 +6,7 @@ int main(){
         for(b=1;b<=40;b++){
             if(a==1||a==12||b==1||b==40){
                 printf("#");
+                
             }
         }
         printf("\n");
