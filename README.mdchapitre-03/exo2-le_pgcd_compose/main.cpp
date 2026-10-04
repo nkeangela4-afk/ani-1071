@@ -27,9 +27,6 @@ int main(){
     scanf("%lld %lld",&a,&b);
     printf("%lld\n",pgcd(a,b));
     printf("%lld\n",ppcm(a,b));
-        if(scanf("%lld",&a)!=1){
-        printf("aucun\n");
-        }
 
     return 0;
 }
