@@ -1,10 +1,12 @@
+#include <cstdio>
 #include "aire.h"
-double aireRectangle(double l,double h){
-    return l*h;
-}
-double aireDisque(double R){
-    return 3.1416* R*R;
-}
-double aireTriangle(double b,double h){
-    return (b*h)/2;
+int main(){
+    double l,h,R;
+    scanf("%lf %lf %lf",&l,&h,&R);
+    printf("%.4f\n",aireRectangle(l,h));
+     printf("%.4f\n",aireDisque(R));
+     printf("%.4f\n",aireTriangle(l,h));
+
+     return 0;
+
 }
