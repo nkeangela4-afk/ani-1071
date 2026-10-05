@@ -1,12 +1,13 @@
-#include <cstdio>
-#include "aire.h"
-int main(){
-    double l,h,R;
-    scanf("%lf %lf %lf",&l,&h,&R);
-    printf("%.4f\n",aireRectangle(l,h));
-     printf("%.4f\n",aireDisque(R));
-     printf("%.4f\n",aireTriangle(l,h));
-
-     return 0;
-
-}
+1.ce que j'ai mis dans le .h
+dans le fichier aire.h j'ai mis les déclarations des fonctions aireRectangle
+j'ai auusi mis une garde de protection 
+le fichier .h indique donc au programme quelles fonctions existent et comment les appeler mais il ne contient pas le corps de fonctions
+2.ce qui se passe si j'enlève la garde
+la garde sert a empêcher que le contenu de aire.h soit inclus plusieurs fois dans un même fichier source
+si j'enlevé la garde les déclarations peuvent être répétées et provoque des erreurs de compilation 
+3.pourquoi main.cpp compile sans voir le corps des fonctions 
+grace a #include "aire.h" il connait leurs declarations leurs noms leurs parametres et leurs types de retour
+3 4 1
+12.0000
+3.1416
+6.0000
