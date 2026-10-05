@@ -1,0 +1,6 @@
+#ifndef AIRE_H
+#define AIRE_H
+double aireRectangle(double l,double h);
+double aireDisque(double R);
+double aireTriangle(double b,double h);
+#endif
