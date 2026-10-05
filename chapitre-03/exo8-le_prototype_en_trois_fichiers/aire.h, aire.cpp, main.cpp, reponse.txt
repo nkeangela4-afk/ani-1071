@@ -1,6 +1,10 @@
-#ifndef AIRE_H
-#define AIRE_H
-double aireRectangle(double l,double h);
-double aireDisque(double R);
-double aireTriangle(double b,double h);
-#endif
+#include "aire.h"
+double aireRectangle(double l,double h){
+    return l*h;
+}
+double aireDisque(double R){
+    return 3.1416* R*R;
+}
+double aireTriangle(double b,double h){
+    return (b*h)/2;
+}
