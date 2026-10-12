@@ -1,4 +1,4 @@
-j'ai utilise le boucle for et la fonction renverser
+
 #include <cstdio>
 void renverser(int t[],int n){
     int i,temporaire;
