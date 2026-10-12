@@ -1,4 +1,3 @@
-
 #include <cstdio>
 void renverser(int t[],int n){
     int i,temporaire;
@@ -12,11 +11,9 @@ int main(){
     int t[5]={1,2,3,4,5};
     int i,n=5;
     renverser (t,n);
-    
-    for(i=0;i<n;i++){
+     for(i=0;i<n;i++){
         printf("%d\n",t[i]);
     }
 
     return 0;
-    
 }
