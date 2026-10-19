@@ -1,40 +1,20 @@
-#include<cstdio>
-void echanger(int* a,int* b){
-    int temporaire=*a;
-    *a=*b;
-    *b=temporaire;
-}
-void echanger(int& a,int& b){
-    int temporaire=a;
-    a=b;
-    b=temporaire;
-}
-void echangerDouble(double& a,double& b){
-    double temporaire=a;
-    a=b;
-    b=temporaire;
-}
-void echangerChar(char& a,char& b){
-    char temporaire=a;
-    a=b;
-    b=temporaire;
-}
-int main(){
-    int x=1,y=2;
-    double z=0.5,t=3.5;
-    char c='A',d='B';
-    printf("avant l'appel des pointeurs:%d %d\n",x,y);
-    echanger(&x,&y);
-    printf("apres l'appel des pointeurs:%d %d\n",x,y);
-    printf("avant l'appel des references:%d %d\n",x,y);
-    echanger(x,y);
-    printf("apres l'appel des refences:%d %d\n",x,y);
-    printf("avant echangerDouble:%f %f\n",z,t);
-    echangerDouble(z,t);
-    printf("apres echangerDouble:%f %f\n",z,t);
-    printf("avant echangerChar:%c %c\n",c,d);
-    echangerChar(c,d);
-    printf("apres echangerChar:%c %c\n",c,d);
+.SORTIE
+le programme affiche les valeurs de deux entiers avant et apres l'appel des ponteurs puis avant et apres l'appel des references.
+il affiche egalement les valeurs de deux nombres reels et de deux caractere avabt et apresleur echange
+avant l'appel des pointeurs:1 2
+apres l'appel des pointeurs:2 1
+avant l'appel des references:2 1
+apres l'appel des refences:1 2
+avant echangerDouble:0.500000 3.500000
+apres echangerDouble:3.500000 0.500000
+avant echangerChar:A B
+apres echangerChar:B A
 
-    return 0;
-}
+.A L'appel
+l'appel echanger(&x,&y) utilise la version par pointeurs car il transmet les adresses de x et y
+l'appel echanger(x,y) utilise la version par references
+
+.CE QUI CHANGE 
+la version par pointeurs utilise des parametres de types int* l'operateur * pour acceder aux valeurs et l'operateur & lors de l'appel pour transmettre les adresses 
+la version par references utilise des paraletres de types int& et l'appel se fait directement avec les variables 
+pour les types double et char ils utilisent les parametres de types double& et char&.
