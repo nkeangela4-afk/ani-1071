@@ -1,49 +1,11 @@
- 
-#include <cstdio>
-double scalaire(const double* a, const double* b, int n) {
-    double somme = 0;
-    for (int i = 0; i < n; ++i) {
-        somme += a[i] * b[i];
-    }
-    return somme;
-}
-double norme(const double* v, int n) {
-    return (scalaire(v, v, n));
-}
-void normaliser(double* v, int n) {
-    double longueur = norme(v, n);
-    if (longueur != 0) {
-        for (int i = 0; i < n; ++i) {
-            v[i] /= longueur;
-        }
-    }
-}
-bool voit(const double* garde, const double* direction,
-          const double* joueur) {
-    double v[2] = {
-        joueur[0] - garde[0],
-        joueur[1] - garde[1]
-    };
-    if (norme(v, 2) == 0) {
-        return true;
-    }
-    normaliser(v, 2);
-    return scalaire(direction, v, 2) >= 0.8660254037844386;
-}
-int main() {
-    double garde[2] = {0, 0};
-    double direction[2] = {1, 0};
-    normaliser(direction, 2);
-    double devant[2] = {5, 0};
-    double cote[2] = {5, 3};
-    double derriere[2] = {-5, 0};
-    double bordDedans[2] = {5, 2.8};
-    double bordDehors[2] = {5, 3.0};
-    printf("Devant : %s\n",voit(garde, direction, devant) ? "voit" : "ne voit pas");
-    printf("Cote : %s\n",voit(garde, direction, cote) ? "voit" : "ne voit pas");
-    printf("Derriere : %s\n",voit(garde, direction, derriere) ? "voit" : "ne voit pas");
-    printf("Bord dedans : %s\n",voit(garde, direction, bordDedans) ? "voit" : "ne voit pas");
-    printf("Bord dehors : %s\n",voit(garde, direction, bordDehors) ? "voit" : "ne voit pas");
+ .Devant : ne voit pas
 
-    return 0;
-}
+.Cote : ne voit pas
+
+.Derriere : ne voit pas
+
+.Bord dedans : ne voit pas
+Bord dehors : ne voit pas
+
+.pourquoi 30
+le champ de vision fait 60 degres en tout soit 30 degres de chaque Coteon compare donc le produit scalaireau cosinus de 30
