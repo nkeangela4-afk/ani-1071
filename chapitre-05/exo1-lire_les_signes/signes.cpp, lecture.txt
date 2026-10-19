@@ -1,1 +1,30 @@
+#include<cstdio>
+int main(){
+    int a = 5, b = 9;
+int* p = &a;
+int* q = &b;
+printf("%d %d\n", *p, *q);
+*p = *q;
+printf("%d %d\n", a, b);
+p = q;
+*p = 1;
+printf("%d %d\n", a, b);
 
+return 0;
+}
+
+.PREDICTIONS
+5 9
+9 5
+9 1
+
+.OBTENU
+5 9
+9 9
+9 1
+
+.ECARTS
+je me suis trompe sur la deuxieme ligne a cause de l'instruction *p=*q;
+
+.p=q
+ce que cette instruction change c'est l'adresse memoire de b et ce qui ne change pas c'est la valeur de a
