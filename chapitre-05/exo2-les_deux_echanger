@@ -1,0 +1,40 @@
+#include<cstdio>
+void echanger(int* a,int* b){
+    int temporaire=*a;
+    *a=*b;
+    *b=temporaire;
+}
+void echanger(int& a,int& b){
+    int temporaire=a;
+    a=b;
+    b=temporaire;
+}
+void echangerDouble(double& a,double& b){
+    double temporaire=a;
+    a=b;
+    b=temporaire;
+}
+void echangerChar(char& a,char& b){
+    char temporaire=a;
+    a=b;
+    b=temporaire;
+}
+int main(){
+    int x=1,y=2;
+    double z=0.5,t=3.5;
+    char c='A',d='B';
+    printf("avant l'appel des pointeurs:%d %d\n",x,y);
+    echanger(&x,&y);
+    printf("apres l'appel des pointeurs:%d %d\n",x,y);
+    printf("avant l'appel des references:%d %d\n",x,y);
+    echanger(x,y);
+    printf("apres l'appel des refences:%d %d\n",x,y);
+    printf("avant echangerDouble:%f %f\n",z,t);
+    echangerDouble(z,t);
+    printf("apres echangerDouble:%f %f\n",z,t);
+    printf("avant echangerChar:%c %c\n",c,d);
+    echangerChar(c,d);
+    printf("apres echangerChar:%c %c\n",c,d);
+
+    return 0;
+}
