@@ -1,59 +1,16 @@
-#include<cstdio>
-void deplier(int i,int largeur,int& x,int& y){
-    x=i%largeur;
-    y=i/largeur;
-}
-void minMax(const int t[], int n, int& min, int& max){
-    min=t[0];
-    max=t[0];
-    for(int i = 1;i<n;i++){
-        if(t[i]<min){
-            min=t[i];
-        }
-        if(t[i]>max){
-            max=t[i];
-        }
-    }
-}
-bool diviser(int a,int b,int& quotient,int& reste){
-    if(b==0){
-        return false;
-    }
-    quotient=a/b;
-    reste=a%b;
-    return true;
-}
-int main(){
-    FILE* fichier=fopen("essais.txt","w");
-    if(fichier==nullptr){
-        printf("erreur d'ouverture du fichier.\n");
-        return 1;
-    }
-    fprintf(fichier,"deplier:\n");
-    int x,y;
-    int largeur=40;
-    int numero[]={0,17,39,40,79,1599};
-    int n=sizeof(numero)/sizeof(numero[0]);
-    for(int i=0;i<n;i++){
-        deplier(numero[i],largeur, x , y);
-        fprintf(fichier,"%d %d %d\n",numero[i],x,y);
-    }
-    fprintf(fichier,"\nminMax\n");
-    int t[]={12,7,19,3,15};
-    int min,max;
-    bool resultat;
-    minMax(t,5,min,max);
-    fprintf(fichier,"%d\n",min);
-    fprintf(fichier,"%d\n",max);
-    fprintf(fichier,"\ndiviser\n");
-    int quotient=-999;
-    int reste=-999;
-    fprintf(fichier,"avant quotient=%d,reste=%d\n",quotient,reste);
-    resultat=diviser(17,0,quotient,reste);
-    fprintf(fichier,"apres quotient=%d,reste=%d\n",quotient,reste);
-    fprintf(fichier,"operation reussie:%s\n",resultat ? "oui":"non");
-    fclose(fichier);
-    printf("les etes ont ete enregistres dans essai.txt.\n");
+ deplier:
+0 0 0
+17 17 0
+39 39 0
+40 0 1
+79 39 1
+1599 39 39
 
-    return 0;
-}
+minMax
+3
+19
+
+diviser
+avant quotient=-999,reste=-999
+apres quotient=-999,reste=-999
+operation reussie:non
