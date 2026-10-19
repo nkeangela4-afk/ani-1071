@@ -1,15 +1,23 @@
-a :
+ #include <cstdio>
+int main() {
+    int x = 1, y = 2;
+    const int* a = &x;
+    int* const b = &x;
+    const int* const c = &x;
+    // Essai 1 : refuse
+    // *a = 5;
+    // Essai 2 : accepte
+    a = &y;
+    // Essai 3 : accepte
+    *b = 5;
+    // Essai 4 : refuse
+    // b = &y;
+    // Essai 5 : refuse
+    // *c = 5;
+    // Essai 6 : refuse
+    // c = &y;
+     printf("x = %d, y = %d\n", x, y);
 
-L'instruction "*a = 5;" est refusée par le compilateur, car "a" pointe vers une valeur constante. L'instruction "a = &y;" est acceptée, car le pointeur "a" peut changer d'adresse.
+    return 0;
+}
 
-b :
-
-L'instruction "*b = 5;" est acceptée, car la valeur pointée par "b" peut être modifiée. L'instruction "b = &y;" est refusée, car le pointeur "b" est constant et ne peut pas changer d'adresse.
-
-c :
-
-L'instruction "*c = 5;" est refusée, car la valeur pointée par "c" est constante. L'instruction "c = &y;" est refusée, car le pointeur "c" est lui aussi constant.
-
-Règle :
-
-Lorsque "const" est placé avant le type de la valeur pointée, il interdit de modifier cette valeur à travers le pointeur. Lorsque "const" est placé après l'étoile, il interdit de modifier l'adresse du pointeur. Si les deux sont présents, les deux opérations sont interdites.
