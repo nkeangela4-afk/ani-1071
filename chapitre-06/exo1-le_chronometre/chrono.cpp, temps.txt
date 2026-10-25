@@ -1,0 +1,71 @@
+#include <chrono>
+#include <cstdio>
+using namespace std;
+using namespace chrono;
+double maintenant(){
+    auto t = steady_clock::now().time_since_epoch();
+    return duration<double>(t).count();
+}
+int main(){
+    long long total = 0;
+    double debut = maintenant();
+    for (int i = 1; i <= 1000000; ++i){
+        total += i;
+    }
+    double fin = maintenant();
+    double duree_boucle = fin - debut;
+    printf("Total = %lld\n", total);
+    printf("Duree de la boucle : %.9f secondes\n", duree_boucle);
+    double durees[5];
+    for (int i = 0; i < 5; ++i){
+        debut = maintenant();
+        printf("Bonjour !\n");
+        fin = maintenant();
+        durees[i] = fin - debut;
+    }
+    FILE *f = fopen("temps.txt", "w");
+    if (f == nullptr){
+        printf("Erreur lors de la creation de temps.txt\n");
+        return 1;
+    }
+    fprintf(f, "-O0 :\n");
+    fprintf(f, "Total = %lld\n", total);
+    fprintf(f, "Duree de la boucle = %.9f secondes\n", duree_boucle);
+    fprintf(f, "\n-O2 :\n");
+    fprintf(f, "Total = %lld\n", total);
+    fprintf(f, "Duree de la boucle = %.9f secondes\n", duree_boucle);
+    fprintf(f, "\nUn printf :\n");
+    for (int i = 0; i < 5; ++i){
+        fprintf(f, "Duree %d = %.9f secondes\n", i + 1, durees[i]);
+    }
+    fprintf(f, "\nLe plus cher :\n");
+    fprintf(f, "Comparer les durees mesurees.\n");
+    fclose(f);
+
+    return 0;
+}
+
+-O0 :
+Total = 500000500000
+Duree de la boucle = 0.000000200 secondes
+1er essai :0.004578000 secondes
+2eme essai :0.003764600 secondes
+3eme essai :0.004220800 secondes
+
+-O2 :
+Total = 500000500000
+Duree de la boucle = 0.000000200 secondes
+1er essai :0.000000200 secondes
+2eme essai :0.000000400 secondes
+3eme essai :0.000000200 secondes
+
+Un printf :
+Duree 1 = 0.000500900 secondes
+Duree 2 = 0.000361400 secondes
+Duree 3 = 0.000763300 secondes
+Duree 4 = 0.000313800 secondes
+Duree 5 = 0.000294900 secondes
+
+Le plus cher :
+Comparer les durees mesurees.
+le plus cher c'est l'effet apparent de l'optimisation
