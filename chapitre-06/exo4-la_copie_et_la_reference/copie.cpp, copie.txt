@@ -1,0 +1,38 @@
+
+#include <cstdio>
+#include <cmath>
+struct Vec2{
+    double x;
+    double y;
+};
+void bougerCopie(Vec2 p){
+    p.x += 1;
+}
+void bougerRef(Vec2& p){
+    p.x += 1;
+}
+double longueurRef(const Vec2& p){
+    // p.x = 0;
+    return sqrt(p.x * p.x + p.y * p.y);
+}
+int main(){
+    Vec2 p = {3, 4};
+    printf("Depart : x = %.2f, y = %.2f\n", p.x, p.y);
+    bougerCopie(p);
+    printf("Apres bougerCopie : x = %.2f, y = %.2f\n", p.x, p.y);
+    bougerRef(p);
+    printf("Apres bougerRef : x = %.2f, y = %.2f\n", p.x, p.y);
+    double longueur = longueurRef(p);
+    printf("Longueur = %.2f\n", longueur);
+    printf("Apres longueurRef : x = %.2f, y = %.2f\n", p.x, p.y);
+
+    return 0;
+}
+ Prévu : Au départ, le vecteur vaut (3, 4). Après "bougerCopie", il reste (3, 4). Après "bougerRef", il devient (4, 4). Après "longueurRef", il reste (4, 4).
+
+Obtenu : Les résultats affichés correspondent aux prévisions. La longueur du vecteur après "bougerRef" vaut environ 5,66.
+
+Message : L'affectation "p.x = 0" dans "longueurRef" provoque une erreur de compilation, car "p" est une référence constante.note: variable 'p' declared const here
+    double longueurRef(const Vec2& p)
+
+Pourquoi : "Vec2 p" passe une copie indépendante ; "Vec2& p" permet de modifier le vecteur original ; "const Vec2& p" permet de consulter le vecteur sans modifier ses membres.
