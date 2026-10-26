@@ -1,0 +1,58 @@
+#include<cstdio>
+struct Vec2{
+    double x;
+    double y;
+};
+struct Particule{
+    Vec2   position;
+    Vec2   vitesse;
+    double vie;
+};
+struct Particule1 {
+    int vie;
+    char etat;
+    double position;
+    double vitesse;
+};
+struct Particule2 {
+    double position;
+    double vitesse;
+    int vie;
+    char etat;
+};
+struct Particule3 {
+ double position;
+    int vie;
+    double vitesse;
+    char etat;
+};
+struct A { char c; int n; };
+struct B { char c; double d; char e; };
+struct C { double d; char c; char e; };
+void mesurer(const char* nom, size_t taille, size_t somme) {
+    printf("%s : somme = %zu octets, taille = %zu octets\n",nom, somme, taille);
+}
+int main() {
+    printf("Mesures des structures\n");
+    mesurer("A", sizeof(A), sizeof(char) + sizeof(int));
+    mesurer("B", sizeof(B), 2 * sizeof(char) + sizeof(double));
+    mesurer("C", sizeof(C), 2 * sizeof(char) + sizeof(double));
+    mesurer("Particule1", sizeof(Particule1),sizeof(int) + sizeof(char) + 2 * sizeof(double));
+    mesurer("Particule2", sizeof(Particule2),sizeof(int) + sizeof(char) + 2 * sizeof(double));
+    mesurer("Particule3", sizeof(Particule3),sizeof(int) + sizeof(char) + 2*sizeof(double));
+
+    return 0;
+}
+MESURES
+A :taille prevue=5 octets,taille obtenue=5
+B :taille prevue=6 octets,taille obtenue=10
+C :taille prevue= 10 octets,taille obtenue=10
+
+ORDRES ESSAYES
+particule1 :vie,etat,position,vitesse=24 octets
+particule2 :position,vitesse,vie,etat=24 octets
+particule3 :position,vie,vitesse,etat=32 octets
+
+REGLE
+Le compilateur peut ajouter des octets de remplissage entre les membres ou a la fin d'une structure pour respecter les contraintes d'alignement memoire 
+la taille totale depend donc du type des membres 
