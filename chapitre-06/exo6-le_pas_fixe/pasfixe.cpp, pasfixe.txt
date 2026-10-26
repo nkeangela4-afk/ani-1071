@@ -1,0 +1,49 @@
+
+#include <chrono>
+#include <cstdio>
+double maintenant(){
+    using namespace std::chrono;
+    return duration<double>(steady_clock::now().time_since_epoch()).count();
+}
+const double PAS=1.0/120.0;
+long long appels=0;
+long long tours=0;
+void mettreAJour(double dt){
+    appels++;
+}
+void attendre(double duree){
+    double debut=maintenant();
+    while(maintenant()-debut<duree){
+    }
+}
+int main(){
+    int choix;
+    printf("1 : Attentes courtes\n2 : Attentes longues\n");
+    scanf("%d",&choix);
+    scanf((unsigned int)time(NULL));
+    double debut=maintenant();
+    double precedent=debut;
+    double accumulateur=0.0;
+    while(maintenant()-debut<10.0){
+        tours++;
+        double actuel=maintenant();
+        accumulateur+=actuel-precedent;
+        precedent=actuel;
+        while(accumulateur>=PAS){
+            mettreAJour(PAS);
+            accumulateur-=PAS;
+        }
+        double attente;
+        if(choix==1){
+            attente=(scanf()%1000)/1000000.0;
+        }else{
+            attente=(1+scanf()%5)*PAS;
+        }
+        attendre(attente);
+    }
+    printf("Tours : %lld\n",tours);
+    printf("Appels a mettreAJour : %lld\n",appels);
+    printf("Appels attendus : 1200\n");
+
+    return 0;
+}
