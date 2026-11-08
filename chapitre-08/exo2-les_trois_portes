@@ -1,1 +1,49 @@
+Tableau :
+1. Depuis Derivee -> publique : compile
+2. Depuis Derivee -> protegee : compile
+3. Depuis Derivee -> privee : refuse
+4. Depuis main -> publique : compile
+5. Depuis main -> protegee : refuse
+6. Depuis main -> privee : refuse
 
+Messages :
+3. erreur : 'int Base::privee' est prive dans ce contexte
+5. erreur : 'int Base::protegee' est protege dans ce contexte
+6. erreur : 'int Base::privee' est prive dans ce contexte
+
+Fonction libre :
+void soigner(Base& b) qui fait b.protegee = 99 refuse aussi.
+Message : erreur : 'int Base::protegee' est protege dans ce contexte
+Pourquoi : protected veut dire accessible seulement depuis Base et ses classes derivees. soigner est une fonction libre, elle n'est ni Base ni Derivee, donc elle n'a pas le droit, meme si elle recoit un Base& en parametre.
+#include <cstdio>
+class Base {
+public:
+    int publique;
+protected:
+    int protegee;
+private:
+    int privee;
+};
+class Derivee : public Base {
+public:
+    void afficher() {
+        printf("%d\n", publique); 
+        printf("%d\n", protegee); 
+        // printf("%d\n", privee); 
+    }
+};
+void soigner(Base& b) {
+    // b.protegee = 9; 
+    b.publique = 9;
+}
+int main() {
+    Derivee d;
+    d.afficher();
+    printf("%d\n", d.publique);
+    // printf("%d\n", d.protegee); 
+    // printf("%d\n", d.privee);  
+    Base b;
+    soigner(b);
+
+return 0;
+}
