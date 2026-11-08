@@ -1,0 +1,61 @@
+#include <cstdio>
+struct Vec2{
+    double x,y;
+};
+class Entite{
+protected:
+    Vec2 position;
+    const char* nom;
+public:
+    Entite(Vec2 p,const char* n):position(p),nom(n){}
+};
+class Ennemi:public Entite{
+private:
+    int degats;
+public:
+    Ennemi(Vec2 p,const char* n,int d):Entite(p,n),degats(d){}
+    void modifierPosition(Vec2 p){
+        position=p;
+    }
+    int obtenirDegats()const{
+        return degats;
+    }
+};
+class Joueur:public Entite{
+private:
+    double vie;
+public:
+    Joueur(Vec2 p,const char* n,double v):Entite(p,n),vie(v){}
+    double obtenirVie()const{
+        return vie;
+    }
+};
+int main(){
+    Ennemi e({0,0},"Ennemi",10);
+    Joueur j({1,1},"Joueur",100);
+    printf("Vec2 : %zu octets\n",sizeof(Vec2));
+    printf("const char* : %zu octets\n",sizeof(const char*));
+    printf("Entite : %zu octets\n",sizeof(Entite));
+    printf("Ennemi : %zu octets\n",sizeof(Ennemi));
+    printf("Joueur : %zu octets\n",sizeof(Joueur));
+    e.modifierPosition({5,5});
+    //e.position={10,10};
+
+    return 0;
+}
+tailles:
+Vec2 : 16 octets
+const char* : 8 octets
+Entite : 24 octets
+Ennemi : 32 octets
+Joueur : 32 octets
+
+ecarts :
+Entite est fait de caracteres et l'octet de celle ci est01 octets
+Ennemi est fait d'entiers et l'octet de celle ci est 04 octets
+Joueur est fait de reels et l'octet de celle ci est  08 octets
+
+refus:
+le refus c'est au niveau de la ligne 37 car position est un menbre protected de entite et on a declare position dans protected
+la methode de ennemi passe parce que on a retourner degats 
+
