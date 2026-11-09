@@ -1,0 +1,41 @@
+#include <cstdio>
+double wrap(double a) {
+    while (a > 180) a -= 360;
+    while (a < -180) a += 360;
+    return a;
+}
+double lerpOrdinaire(double a, double b, double t) {
+    return a + (b - a) * t;
+}
+double lerpAngle(double a, double b, double t) {
+    return a + wrap(b - a) * t;
+}
+int main() {
+    double depart = 350;
+    double arrivee = 10;
+    for (int i = 0; i <= 4; i++) {
+        double t = i / 4.0;
+        printf("t=%.2f ordinaire=%.1f angle=%.1f\n", t, lerpOrdinaire(depart, arrivee, t), wrap(lerpAngle(depart, arrivee, t)));
+    }
+    double capVoiture = 350;
+    double capCamera = 350;
+    for (int i = 0; i <= 10; i++) {
+        double t = i / 10.0;
+        capVoiture = wrap(lerpAngle(350, 10, t));
+        capCamera = wrap(lerpAngle(capCamera, capVoiture, 0.2));
+        printf("voiture=%.1f camera=%.1f\n", capVoiture, capCamera);
+    }
+
+    return 0;
+}
+--- De 350 deg vers 10 deg ---
+t=0.00  ordinaire=350.0 deg  angle=350.0 deg
+t=0.25  ordinaire=265.0 deg  angle=355.0 deg
+t=0.50  ordinaire=180.0 deg  angle=0.0 deg
+t=0.75  ordinaire=95.0 deg   angle=5.0 deg
+t=1.00  ordinaire=10.0 deg   angle=10.0 deg
+
+--- Camera qui suit une voiture ---
+pas  0 : voiture=350.0 deg  camera=350.0 deg  ecart=  0.0 deg
+pas  5 : voiture=  0.0 deg  camera=358.0 deg  ecart=  2.0 deg
+pas 10 : voiture= 10.0 deg  camera=  8.0 deg  ecart=  2.0 deg
