@@ -1,0 +1,68 @@
+#include <cstdio>
+struct Vec2 {
+    double x, y;
+};
+class Entite {
+public:
+    Vec2 position;
+};
+class Mobile : public Entite {
+public:
+    Vec2 vitesse;
+};
+class Visible : public Entite {
+public:
+    char glyphe = 'E';
+};
+class Ennemi : public Mobile, public Visible {
+public:
+};
+int main() {
+    printf("sizeof(Entite) = %zu\n", sizeof(Entite));
+    printf("sizeof(Mobile) = %zu\n", sizeof(Mobile));
+    printf("sizeof(Visible) = %zu\n", sizeof(Visible));
+    printf("sizeof(Ennemi) = %zu\n", sizeof(Ennemi));
+    Ennemi e;
+    // e.position.x = 3.0; 
+    e.Mobile::position.x = 3.0;
+    Mobile& rm = e;
+    Visible& rv = e;
+    printf("Vue par Mobile& : %f\n", rm.position.x);
+    printf("Vue par Visible& : %f\n", rv.position.x);
+
+    return 0;
+}
+Message :
+error: request for member 'position' is ambiguous
+En francais : erreur : demande du membre 'position' ambigue
+Explication : Ennemi a 2 fois Entite, donc 2 fois position. Le compilateur ne sait pas laquelle prendre entre Mobile::position et Visible::position.
+
+Tailles :
+SANS virtual :
+sizeof(Entite) = 16 octets : 1 Vec2 = 2 x double = 16
+sizeof(Mobile) = 32 octets : Entite 16 + vitesse 16
+sizeof(Visible) = 24 octets : Entite 16 + glyphe 1 + 7 de remplissage
+sizeof(Ennemi) = 56 octets : Mobile 32 + Visible 24 = 2 fois Entite
+
+AVEC virtual :
+sizeof(Entite) = 16 octets : 1 Vec2 = 16
+sizeof(Mobile) = 40 octets : pointeur virtuel 8 + vitesse 16 + Entite 16
+sizeof(Visible) = 32 octets : pointeur virtuel 8 + glyphe 1 + remplissage 7 + Entite 16
+sizeof(Ennemi) = 56 octets : 1 seule Entite 16 + Mobile + Visible + pointeurs virtuels
+Ce qui occupe la place : sans virtual, ce sont les 2 copies de Entite. Avec virtual, ce sont les pointeurs virtuels qui permettent de partager la seule copie.
+
+Deux positions :
+SANS virtual, apres e.Mobile::position.x = 3.0; :
+Vue par Mobile& : 3.0
+Vue par Visible& : 0.0
+Les deux references ne voient pas la meme position, l'ennemi est a deux endroits en meme temps.
+
+AVEC virtual, apres e.position.x = 3.0; :
+Vue par Mobile& : 3.0
+Vue par Visible& : 3.0
+Les deux references voient la meme position, il n'y en a plus qu'une.
+
+Pourquoi jamais :
+1. Sans virtual, j'ai deux positions incoherentes pour un seul ennemi.
+2. Avec virtual, je paie des pointeurs virtuels, un objet plus gros et une construction plus compliquee pour reparer un probleme que j'ai cree moi-meme.
+3. Je ne referai jamais ce montage : un Ennemi aura une seule Entite, avec composition ou heritage simple, pas un heritage en diamant.
