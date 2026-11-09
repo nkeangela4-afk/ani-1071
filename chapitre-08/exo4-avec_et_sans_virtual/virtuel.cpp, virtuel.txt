@@ -1,0 +1,61 @@
+ 
+#include <cstdio>
+int gEnnemi=0;
+int gFantome=0;
+int gRobot=0;
+class Ennemi{
+public:
+    virtual void deplacer(double dt){
+        (void)dt;
+        gEnnemi++;
+    }
+    virtual ~Ennemi(){}
+};
+class Fantome:public Ennemi{
+public:
+    void deplacer(double dt) override{
+        (void)dt;
+        gFantome++;
+    }
+};
+class Robot:public Ennemi{
+public:
+    void deplacer(double dt) override{
+        (void)dt;
+        gRobot++;
+    }
+};
+int main(){
+    Ennemi* ennemis[6]={
+        new Ennemi,
+        new Robot,
+        new Fantome,
+        new Robot,
+        new Fantome,
+        new Fantome
+    };
+    for(int i=0;i<6;i++){
+        for(int j=0;j<10;j++){
+            ennemis[i]->deplacer(0.1);
+        }
+    }
+    printf("%d\n",gEnnemi);
+    printf("%d\n",gFantome);
+    printf("%d\n ",gRobot);
+    for(int i=0;i<6;i++){
+        delete ennemis[i];
+    }
+
+    return 0;
+}
+Avec virtual :
+
+Les compteurs obtenus sont : Ennemi = 10, Fantome = 30 et Robot = 20. Chaque objet appelle sa propre méthode de déplacement grâce au polymorphisme. Le mot virtual permet de choisir la méthode selon le véritable type de l'objet.
+
+Sans virtual :
+
+Les compteurs obtenus sont : Ennemi = 60, Fantome = 0 et Robot = 0. Tous les appels utilisent la méthode de la classe Ennemi, car la méthode n'est plus virtuelle. Il faut également retirer override dans les classes dérivées pour compiler.
+
+Faute de frappe :
+
+Avec override, le compilateur refuse le programme parce que deplbcer ne redéfinit aucune méthode de la classe mère. Sans override, le programme compile, mais la méthode de Fantome n'est pas appelée. Les compteurs deviennent : Ennemi = 40, Fantome = 0 et Robot = 20. override permet donc de détecter les erreurs de redéfinition.
