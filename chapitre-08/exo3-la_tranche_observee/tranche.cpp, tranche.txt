@@ -1,0 +1,46 @@
+#include <cstdio>
+class Entite{
+public:
+    virtual const char* nom() const{
+        return "entite";
+    }
+    virtual ~Entite(){}
+};
+class Ennemi:public Entite{
+public:
+    int degats;
+    const char* nom() const override{
+        return "ennemi";
+    }
+};
+void f(Entite e){
+    printf("%s\n",e.nom());
+}
+void g(Entite& e){
+    printf("%s\n",e.nom());
+}
+void h(Entite* e){
+    printf("%s\n",e->nom());
+}
+int main(){
+    Ennemi e;
+    f(e);
+    g(e);
+    h(&e);
+    printf("%zu\n",sizeof(Entite));
+    printf("%zu\n",sizeof(Ennemi));
+
+    return 0;
+}
+sorties:
+entite
+ennemi
+ennemi
+
+tailles:
+1
+8
+
+pourquoi:
+la fonction f recoit unr copir de l'objet ennemi sous forme d'entite.
+elle perd donc la partie propre a ennemi notamment son membre degats.
