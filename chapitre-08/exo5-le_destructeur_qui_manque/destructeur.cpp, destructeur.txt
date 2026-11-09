@@ -1,0 +1,67 @@
+Avec virtual :
+Avec Ennemi*
+~Fantome taille=1000
+Trace : detruit
+~Ennemi
+
+Avec Fantome*
+~Fantome taille=1000
+Trace : detruit
+~Ennemi
+
+Sans virtual :
+Avec Ennemi*
+~Ennemi
+
+ Avec Fantome*
+~Fantome taille=1000
+Trace : detruit
+~Ennemi
+
+Avertissement :
+warning: deleting object of polymorphic class type 'Ennemi' which has non-virtual destructor might cause undefined behavior [-Wdelete-non-virtual-dtor]
+En francais : avertissement : suppression d'un objet de type polymorphe 'Ennemi' qui a un destructeur non virtuel, cela peut provoquer un comportement indefini
+
+Pourquoi :
+Sans virtual, delete e avec Ennemi* e ne connait que le type Ennemi, donc il n'appelle que ~Ennemi.
+~Fantome n'est jamais appele. Donc le membre tab de 1000 cases n'est jamais libere et le membre Trace n'est jamais detruit, on le voit car la ligne "Trace : detruit" n'apparait pas.
+Avec Fantome*, ca marche meme sans virtual, car le compilateur connait le vrai type Fantome. C'est pour ca qu'il faut toujours mettre virtual sur le destructeur d'une classe de base.
+#include <cstdio>
+#include <vector>
+class Trace {
+public:
+    ~Trace() { 
+       printf("Trace : detruit\n"); 
+     }
+};
+class Ennemi {
+public:
+    virtual void deplacer() { 
+        printf("Ennemi : deplace\n"); 
+     }
+    virtual ~Ennemi() { 
+       printf("~Ennemi\n"); 
+    }
+};
+class Fantome : public Ennemi {
+public:
+    std::vector<int> tab;
+    Trace trace;
+    Fantome() : tab(1000, 0) {}
+    void deplacer() override { 
+        printf("Fantome : deplace\n"); 
+    }
+    ~Fantome() {
+       printf("~Fantome taille=%zu\n", tab.size()); 
+     }
+};
+int main() {
+    printf("Avec Ennemi*\n");
+    Ennemi* e = new Fantome();
+    delete e;
+    printf(" Avec Fantome*\n");
+    Fantome* f = new Fantome();
+    delete f;
+
+    return 0;
+}
