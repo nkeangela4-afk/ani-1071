@@ -33,6 +33,7 @@ int main(){
             printf("%c",format[i]);
         }
     }
+    printf("\n");
     printf("REPLACES %d\n",replaces);
     printf("MANQUANTS %d\n",manquants);
 
